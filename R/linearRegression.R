@@ -1,13 +1,28 @@
-# Linear Regression Function
-#' Title
+
+#' Linear Regression Function
 #'
-#' @param x
-#' @param y
+#' This function performs a linear regression analysis on a given dataset.
+#' It takes an outcome variable and a predictor variable from the dataset
+#' and calculates the linear regression coefficients, residuals, standard errors,
+#' t-values, p-values, multiple R-squared, F-statistic, and p-value for the F-statistic.
 #'
-#' @return
+#' @param outcome_name The name of the outcome variable in the dataset.
+#' @param predictor_name The name of the predictor variable in the dataset.
+#' @param data The dataset containing the variables.
+#'
+#' @return A list containing the following components:
+#'   - Residuals: A numeric vector of five summary statistics of residuals (min, 1Q, median, 3Q, max).
+#'   - Coefficients: A dataframe with estimates, standard errors, t-values, and p-values of the coefficients.
+#'   - `Multiple R-squared`: The R-squared value of the model.
+#'   - `F-statistic`: The F-statistic value of the model.
+#'   - `p-value`: The p-value associated with the F-statistic.
+#'
 #' @export
 #'
 #' @examples
+#' data(testdata)
+#' result <- linearRegression("Optimism", "Age", data)
+#' print(result)
 
 linearRegression <- function(outcome_name, predictor_name, data){
   # Extracting the variables from the data
