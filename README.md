@@ -24,7 +24,7 @@ You can install the development version of linearRegression like so:
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-
+#library(linearRegression)
 ## basic example code
 ```
 
