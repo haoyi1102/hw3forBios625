@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of linearRegression is to ...
+The goal of linearRegression is to performing linear regression analysis. This package allows users to easily compute linear regression coefficients, residuals, standard errors, t-values, p-values, multiple R-squared, F-statistic, and p-value for the F-statistic for any given dataset.
+
 
 ## Installation
 
@@ -35,22 +36,21 @@ devtools::install_github("haoyi1102/hw3forBios625")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-#library(linearRegression)
-## basic example code
-```
+# Load the package
+library(linearRegression)
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+#load example dataset
+data <- data.frame(
+  Outcome = c(1, 2, 3, 4, 5),
+  Predictor = c(2, 3, 4, 5, 6)
+)
 
-```{r cars}
-summary(cars)
+#Perform linear regression
+result <- linearRegression("Outcome", "Predictor", data)
+
+#view the results
+print(result)
 ```
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
