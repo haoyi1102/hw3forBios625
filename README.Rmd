@@ -27,8 +27,8 @@ The goal of linearRegression is to performing linear regression analysis. This p
 
 You can install the development version of linearRegression from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+```{r}
+#install.packages("devtools") --> -->
 devtools::install_github("haoyi1102/hw3forBios625")
 ```
 

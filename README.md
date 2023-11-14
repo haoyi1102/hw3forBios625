@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/haoyi1102/hw3forBios625/branch/master/graph/badge.svg)](https://app.codecov.io/gh/haoyi1102/hw3forBios625?branch=master)
 <!-- badges: end -->
 
 The goal of linearRegression is to performing linear regression
@@ -20,8 +22,23 @@ You can install the development version of linearRegression from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+#install.packages("devtools") --> -->
 devtools::install_github("haoyi1102/hw3forBios625")
+#> Downloading GitHub repo haoyi1102/hw3forBios625@HEAD
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>          checking for file 'C:\Users\24468\AppData\Local\Temp\Rtmp00Msv0\remotes1ca46fa94d41\haoyi1102-hw3forBios625-1b8be3f/DESCRIPTION' ...  ✔  checking for file 'C:\Users\24468\AppData\Local\Temp\Rtmp00Msv0\remotes1ca46fa94d41\haoyi1102-hw3forBios625-1b8be3f/DESCRIPTION' (425ms)
+#>       ─  preparing 'linearRegression':
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>       ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>      NB: this package now depends on R (>=        NB: this package now depends on R (>= 3.5.0)
+#>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+#>      serialize/load version 3 cannot be read in older versions of R.
+#>      File(s) containing such objects:
+#>      'linearRegression/data/testdata.RData'         'linearRegression/data/testdata.RData'
+#> ─  building 'linearRegression_0.1.0.tar.gz'
+#>      
+#> 
 ```
 
 ## Example
