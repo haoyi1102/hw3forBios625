@@ -4,6 +4,9 @@
 # linearRegression
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/haoyi1102/hw3forBios625/branch/master/graph/badge.svg)](https://app.codecov.io/gh/haoyi1102/hw3forBios625?branch=master)
 <!-- badges: end -->
 
 The goal of linearRegression is to …
@@ -21,7 +24,7 @@ You can install the development version of linearRegression like so:
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(linearRegression)
+
 ## basic example code
 ```
 
