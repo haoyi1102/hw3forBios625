@@ -17,7 +17,7 @@ linearRegression <- function(x, y) {
 
   return(t(beta))
 }
-# # Example usage of the function
+# Example usage of the function
 # x <- matrix(c(1, 2, 3, 4), ncol = 1) # Predictor variable
 # y <- c(2, 3, 5, 4)                   # Response variable
 #
