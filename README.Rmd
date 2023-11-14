@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/haoyi1102/hw3forBios625/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/haoyi1102/hw3forBios625/branch/master/graph/badge.svg)](https://app.codecov.io/gh/haoyi1102/hw3forBios625?branch=master)
 <!-- badges: end -->
 
 The goal of linearRegression is to performing linear regression analysis. This package allows users to easily compute linear regression coefficients, residuals, standard errors, t-values, p-values, multiple R-squared, F-statistic, and p-value for the F-statistic for any given dataset.
