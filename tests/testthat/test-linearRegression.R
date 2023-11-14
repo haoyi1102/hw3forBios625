@@ -37,6 +37,6 @@ test_that("linearRegression matches lm function results", {
   # Calculate p-value for F-statistic from the lm model
   p_value_f_lm <- pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
 
-  # Expect the p-value from the custom model to match the calculated p-value from the lm model
+  # Expect the p-value from the custom model to match the calculated p-value from the lm model.
   expect_equal(m$`p-value`, as.vector(p_value_f_lm))
 })
