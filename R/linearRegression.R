@@ -31,79 +31,90 @@
 #' print(result)
 
 
-linearRegression <- function(outcome_name, predictor_name, data, plot = FALSE){
-  # Extracting the variables from the data
-  y <- data[,outcome_name]
-  x <- data[,predictor_name]
-  # y <- data[,"Optimism"]
-  # x <- data[,"Age"]
-  # Adding a column of 1s for the intercept
-  X <- cbind(1, x)
+linearRegression <-
+  function(outcome_name, predictor_name, data, plot = FALSE) {
+    # Extracting the variables from the data
+    y <- data[, outcome_name]
+    x <- data[, predictor_name]
+    # y <- data[,"Optimism"]
+    # x <- data[,"Age"]
+    # Adding a column of 1s for the intercept
+    X <- cbind(1, x)
 
-  # Calculating the coefficients using the formula: (X'X)^(-1)X'Y
-  beta <- solve(t(X) %*% X) %*% t(X) %*% y
+    # Calculating the coefficients using the formula: (X'X)^(-1)X'Y
+    beta <- solve(t(X) %*% X) %*% t(X) %*% y
 
-  # Calculating residuals (difference between observed and predicted values)
-  residuals <- y - X %*% beta
+    # Calculating residuals (difference between observed and predicted values)
+    residuals <- y - X %*% beta
 
-  # Calculating standard error of coefficients
-  n <- length(y)
-  p <- ncol(X)
-  df <- n - p
-  sse <- sum(residuals^2)
-  mse <- sse / df
-  se_beta <- sqrt(diag(mse * solve(t(X) %*% X)))
+    # Calculating standard error of coefficients
+    n <- length(y)
+    p <- ncol(X)
+    df <- n - p
+    sse <- sum(residuals ^ 2)
+    mse <- sse / df
+    se_beta <- sqrt(diag(mse * solve(t(X) %*% X)))
 
-  # Calculating t-values for coefficients
-  t_values <- beta / se_beta
+    # Calculating t-values for coefficients
+    t_values <- beta / se_beta
 
-  # Calculating p-values for t-values
-  p_values <- 2 * pt(-abs(t_values), df)
+    # Calculating p-values for t-values
+    p_values <- 2 * pt(-abs(t_values), df)
 
-  # Calculating multiple R-squared
-  ssr <- sum((X %*% beta - mean(y))^2)
-  sst <- sum((y - mean(y))^2)
-  r_squared <- ssr / sst
+    # Calculating multiple R-squared
+    ssr <- sum((X %*% beta - mean(y)) ^ 2)
+    sst <- sum((y - mean(y)) ^ 2)
+    r_squared <- ssr / sst
 
-  # Calculating F-statistic
-  f_statistic <- (ssr / (p - 1)) / (sse / df)
+    # Calculating F-statistic
+    f_statistic <- (ssr / (p - 1)) / (sse / df)
 
-  # Calculating p-value for F-statistic
-  p_value_f <- pf(f_statistic, p - 1, df, lower.tail = FALSE)
+    # Calculating p-value for F-statistic
+    p_value_f <- pf(f_statistic, p - 1, df, lower.tail = FALSE)
 
-  # Creating a list to store the results
-  results <- list(
-    Residuals = fivenum(residuals),
-    Coefficients = data.frame(Estimate = beta, Std.Error = se_beta, t_value = t_values, Pr = p_values),
-    `Multiple R-squared` = r_squared,
-    `F-statistic` = f_statistic,
-    `p-value` = p_value_f
-  )
+    # Creating a list to store the results
+    results <- list(
+      Residuals = fivenum(residuals),
+      Coefficients = data.frame(
+        Estimate = beta,
+        Std.Error = se_beta,
+        t_value = t_values,
+        Pr = p_values
+      ),
+      `Multiple R-squared` = r_squared,
+      `F-statistic` = f_statistic,
+      `p-value` = p_value_f
+    )
 
-  # Creating a plot if 'plot' is TRUE
-  if(plot) {
-    # Calculating standardized residuals
-    std_residuals <- residuals / sqrt(sum(residuals^2) / df)
+    # Creating a plot if 'plot' is TRUE
+    if (plot) {
+      # Calculating standardized residuals
+      std_residuals <- residuals / sqrt(sum(residuals ^ 2) / df)
 
-    # Calculating studentized residuals using the rstudent() function
-    lm_model <- lm(y ~ x)
-    stud_residuals <- rstudent(lm_model)
+      # Calculating studentized residuals using the rstudent() function
+      lm_model <- lm(y ~ x)
+      stud_residuals <- rstudent(lm_model)
 
-    # Calculating leverage values using the hatvalues() function
-    hii <- hatvalues(lm_model)
+      # Calculating leverage values using the hatvalues() function
+      hii <- hatvalues(lm_model)
 
-    # Plotting the scatter plot using the base R plot function
-    plot(std_residuals, stud_residuals - std_residuals,
-         xlab = "Standardized Residuals",
-         ylab = "Difference Between Studentized and Standardized Residuals",
-         main = "Plot of Residuals")
-    # Adding points to the plot with size proportional to leverage values
-    points(std_residuals, stud_residuals - std_residuals, pch = 20, cex = sqrt(hii) * 2)
+      # Plotting the scatter plot using the base R plot function
+      plot(
+        std_residuals,
+        stud_residuals - std_residuals,
+        xlab = "Standardized Residuals",
+        ylab = "Difference Between Studentized and Standardized Residuals",
+        main = "Plot of Residuals"
+      )
+      # Adding points to the plot with size proportional to leverage values
+      points(
+        std_residuals,
+        stud_residuals - std_residuals,
+        pch = 20,
+        cex = sqrt(hii) * 2
+      )
+    }
+
+    # Returning the results
+    return(results)
   }
-
-  # Returning the results
-  return(results)
-}
-
-
-

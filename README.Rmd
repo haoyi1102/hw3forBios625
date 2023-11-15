@@ -13,6 +13,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Overview
+
+The goal of hw3forBios625 is to develop an R package implementing an existing R function.
+
 # linearRegression
 
 <!-- badges: start -->
@@ -28,9 +32,33 @@ The goal of linearRegression is to performing linear regression analysis. This p
 You can install the development version of linearRegression from [GitHub](https://github.com/) with:
 
 ```{r}
-#install.packages("devtools") --> -->
+#install.packages("devtools") --> 
 devtools::install_github("haoyi1102/hw3forBios625")
 ```
+## dataset
+```{r}
+# Load the package
+library(linearRegression)
+
+#load example dataset
+data("testdata")
+names(data)
+```
+Check out the help page for the `testdata` data set using `?testdata`
+
+## Usage
+After installation, load the package and use the 'linearRegression' function as follows:
+
+```{r}
+library(linearRegression)
+
+# Basic usage
+#result <- linearRegression(outcome_name = "OutcomeVariable", 
+#                           predictor_name = "PredictorVariable", 
+#                           data = YourDataFrame, 
+#                           plot = TRUE)
+```
+
 
 ## Example
 
@@ -40,18 +68,17 @@ This is a basic example which shows you how to solve a common problem:
 # Load the package
 library(linearRegression)
 
-#load example dataset
-data <- data.frame(
-  Outcome = c(1, 2, 3, 4, 5),
-  Predictor = c(2, 3, 4, 5, 6)
-)
-
 #Perform linear regression
-result <- linearRegression("Outcome", "Predictor", data)
+result <- linearRegression("Optimism", "Age", data = data , plot = TRUE)
 
 #view the results
 print(result)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+## Getting Help
 
+If you encounter any issues or have questions about the 'linearRegression' package:
+
+1. Refer to the in-built documentation by calling '?linearRegression' in R.
+
+2. Check the vignettes for detailed examples and use cases.

@@ -2,7 +2,6 @@
 # Test case for comparing the results of the custom linearRegression function
 # with the built-in lm function in R
 test_that("linearRegression matches lm function results", {
-
   # Load test data
   data("testdata")
 
@@ -36,7 +35,8 @@ test_that("linearRegression matches lm function results", {
 
   # Compare p-value of F-statistic
   # Calculate p-value for F-statistic from the lm model
-  p_value_f_lm <- pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
+  p_value_f_lm <-
+    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
 
   # Expect the p-value from the custom model to match the calculated p-value from the lm model.
   expect_equal(m$`p-value`, as.vector(p_value_f_lm))
@@ -52,6 +52,6 @@ test_that("linearRegression matches lm function results", {
   # The test checks if a plot was indeed created by verifying that the recorded plot object has a non-zero length.
   # The expect_true function from the testthat package is used for this assertion.
   # If a plot was created, plot_record will have elements, and its length will be greater than zero.
-  expect_equal(length(plot_record) > 0,TRUE)
+  expect_equal(length(plot_record) > 0, TRUE)
 
 })
