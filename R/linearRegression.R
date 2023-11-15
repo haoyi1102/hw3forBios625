@@ -1,14 +1,20 @@
-
 #' Linear Regression Function
 #'
 #' This function performs a linear regression analysis on a given dataset.
 #' It takes an outcome variable and a predictor variable from the dataset
 #' and calculates the linear regression coefficients, residuals, standard errors,
 #' t-values, p-values, multiple R-squared, F-statistic, and p-value for the F-statistic.
+#' If the 'plot' parameter is set to TRUE, it also creates a plot of the
+#' difference between studentized and standardized residuals versus
+#' the standardized residuals.
 #'
 #' @param outcome_name The name of the outcome variable in the dataset.
 #' @param predictor_name The name of the predictor variable in the dataset.
 #' @param data The dataset containing the variables.
+#' @param plot Logical, whether to plot the residuals. If TRUE, creates a plot
+#'        showing the difference between studentized and standardized residuals
+#'        against standardized residuals. The size of the dots in the plot
+#'        depends on the leverage value for each observation.
 #'
 #' @return A list containing the following components:
 #'   - Residuals: A numeric vector of five summary statistics of residuals (min, 1Q, median, 3Q, max).
@@ -21,10 +27,11 @@
 #'
 #' @examples
 #' data(testdata)
-#' result <- linearRegression("Optimism", "Age", data)
+#' result <- linearRegression("Optimism", "Age", data, plot = TRUE)
 #' print(result)
 
-linearRegression <- function(outcome_name, predictor_name, data){
+
+linearRegression <- function(outcome_name, predictor_name, data, plot = FALSE){
   # Extracting the variables from the data
   y <- data[,outcome_name]
   x <- data[,predictor_name]
@@ -73,10 +80,30 @@ linearRegression <- function(outcome_name, predictor_name, data){
     `p-value` = p_value_f
   )
 
+  # Creating a plot if 'plot' is TRUE
+  if(plot) {
+    # Calculating standardized residuals
+    std_residuals <- residuals / sqrt(sum(residuals^2) / df)
+
+    # Calculating studentized residuals using the rstudent() function
+    lm_model <- lm(y ~ x)
+    stud_residuals <- rstudent(lm_model)
+
+    # Calculating leverage values using the hatvalues() function
+    hii <- hatvalues(lm_model)
+
+    # Plotting the scatter plot using the base R plot function
+    plot(std_residuals, stud_residuals - std_residuals,
+         xlab = "Standardized Residuals",
+         ylab = "Difference Between Studentized and Standardized Residuals",
+         main = "Plot of Residuals")
+    # Adding points to the plot with size proportional to leverage values
+    points(std_residuals, stud_residuals - std_residuals, pch = 20, cex = sqrt(hii) * 2)
+  }
+
   # Returning the results
   return(results)
 }
-
 
 
 

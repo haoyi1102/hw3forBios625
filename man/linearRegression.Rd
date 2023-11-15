@@ -4,7 +4,7 @@
 \alias{linearRegression}
 \title{Linear Regression Function}
 \usage{
-linearRegression(outcome_name, predictor_name, data)
+linearRegression(outcome_name, predictor_name, data, plot = FALSE)
 }
 \arguments{
 \item{outcome_name}{The name of the outcome variable in the dataset.}
@@ -12,6 +12,11 @@ linearRegression(outcome_name, predictor_name, data)
 \item{predictor_name}{The name of the predictor variable in the dataset.}
 
 \item{data}{The dataset containing the variables.}
+
+\item{plot}{Logical, whether to plot the residuals. If TRUE, creates a plot
+showing the difference between studentized and standardized residuals
+against standardized residuals. The size of the dots in the plot
+depends on the leverage value for each observation.}
 }
 \value{
 A list containing the following components:
@@ -26,9 +31,12 @@ This function performs a linear regression analysis on a given dataset.
 It takes an outcome variable and a predictor variable from the dataset
 and calculates the linear regression coefficients, residuals, standard errors,
 t-values, p-values, multiple R-squared, F-statistic, and p-value for the F-statistic.
+If the 'plot' parameter is set to TRUE, it also creates a plot of the
+difference between studentized and standardized residuals versus
+the standardized residuals.
 }
 \examples{
 data(testdata)
-result <- linearRegression("Optimism", "Age", data)
+result <- linearRegression("Optimism", "Age", data, plot = TRUE)
 print(result)
 }
