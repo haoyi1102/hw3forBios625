@@ -107,4 +107,3 @@ linearRegression <- function(outcome_name, predictor_name, data, plot = FALSE){
 
 
 
-
