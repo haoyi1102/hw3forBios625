@@ -54,5 +54,4 @@ test_that("linearRegression matches lm function results", {
   # If a plot was created, plot_record will have elements, and its length will be greater than zero.
   expect_equal(length(plot_record) > 0,TRUE)
 
-
 })
