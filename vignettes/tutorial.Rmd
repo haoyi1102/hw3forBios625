@@ -31,7 +31,7 @@ devtools::install_github("haoyi1102/hw3forBios625")
 
 ## Loading the Package
 ```{r}
-library(YourPackageName)
+library(linearRegression)
 ```
 
 ## dataset

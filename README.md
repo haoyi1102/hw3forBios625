@@ -29,7 +29,7 @@ You can install the development version of linearRegression from
 ``` r
 #install.packages("devtools") --> 
 devtools::install_github("haoyi1102/hw3forBios625")
-#> Skipping install of 'linearRegression' from a github remote, the SHA1 (cf55fad3) has not changed since last install.
+#> Skipping install of 'linearRegression' from a github remote, the SHA1 (cca36745) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 ```
 
@@ -58,7 +58,7 @@ names(data)
 #> [53] "EducationHS"
 ```
 
-Check out the help page for the `testdata` data set using `?testdata`
+Check out the help page for the `data` data set using `?data`
 
 ## Usage
 
@@ -185,8 +185,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                             min median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>                           <bch> <bch:>     <dbl> <bch:byt>    <dbl>
-#> 1 "m$Coefficients$Estimate"            1.7µs  2.3µs   335570.        0B        0
-#> 2 "as.vector(m1$coefficients[, \"Esti… 4.2µs  7.8µs   101010.        0B        0
+#> 1 "m$Coefficients$Estimate"            1.7µs 2.05µs   294985.        0B        0
+#> 2 "as.vector(m1$coefficients[, \"Esti… 3.9µs  4.5µs   160256.        0B        0
 
 # bench::mark for F- statistic
 bench::mark(
@@ -198,8 +198,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                       min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>                  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 m$`F-statistic`                500ns    900ns   877193.        0B        0
-#> 2 as.vector(m1$fstatistic[1])    3.2µs   3.75µs   218341.        0B        0
+#> 1 m$`F-statistic`                500ns    1.1µs   699301.        0B        0
+#> 2 as.vector(m1$fstatistic[1])    3.1µs    3.4µs   220751.        0B        0
 
 # bench::mark for p-value
 
@@ -215,8 +215,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression                   min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>              <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 m$`p-value`                500ns    650ns  1010101.        0B        0
-#> 2 as.vector(p_value_f_lm)    1.2µs    1.4µs   458716.        0B        0
+#> 1 m$`p-value`                  1µs    1.2µs   704225.        0B        0
+#> 2 as.vector(p_value_f_lm)    1.2µs    1.4µs   444444.        0B        0
 ```
 
 ## Getting Help

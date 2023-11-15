@@ -44,7 +44,7 @@ library(linearRegression)
 data("testdata")
 names(data)
 ```
-Check out the help page for the `testdata` data set using `?testdata`
+Check out the help page for the `data` data set using `?data`
 
 ## Usage
 After installation, load the package and use the 'linearRegression' function as follows:
