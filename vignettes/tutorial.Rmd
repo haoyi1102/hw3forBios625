@@ -14,6 +14,140 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(linearRegression)
+# Introduction
+
+This vignette demonstrates the use of the `linearRegression` function from the [YourPackageName] package. The `linearRegression` function is designed to perform linear regression analysis and provide diagnostic plots for model assessment. 
+
+# Installation
+
+You can install the [linearRegression] from github:
+
+```{r}
+#install.packages("devtools") --> 
+devtools::install_github("haoyi1102/hw3forBios625")
 ```
+
+# Example Usage
+
+## Loading the Package
+```{r}
+library(YourPackageName)
+```
+
+## dataset
+```{r}
+# Load the package
+library(linearRegression)
+
+#load example dataset
+data("testdata")
+names(data)
+```
+Check out the help page for the `testdata` data set using `?testdata`
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+# Load the package
+library(linearRegression)
+
+#Perform linear regression
+result <- linearRegression("Optimism", "Age", data = data , plot = TRUE)
+
+#view the results
+print(result)
+```
+`
+
+## Test correctness and efficiency
+The comparison(s) against the original R function(s) on simulated or real datasets clearly and sufficiently demonstrate both correctness and efficiency of the function(s) implemented in the R package.
+
+```{r}
+library(linearRegression)
+
+# Load test data
+data("testdata")
+
+# Run the custom linear regression function
+m <- linearRegression("Optimism", "Age", data)
+
+# Run the built-in lm() function and summarize it
+m1 <- summary(lm(Optimism ~ Age, data))
+```
+
+Test correctness
+```{r}
+library(testthat)
+
+test_that("linearRegression matches lm function results", {
+  
+  # Compare Residuals
+ 
+  expect_equal(m$Residuals, as.vector(fivenum(m1$residuals)))
+
+  # Compare Coefficients
+  # Extract coefficients from the custom model
+  custom_coeffs <- m$Coefficients$Estimate
+
+  # Extract coefficients from the lm model summary
+  lm_coeffs <- m1$coefficients[, "Estimate"]
+
+  # Expect the coefficients from the custom model to match those from the lm model
+  expect_equal(custom_coeffs, as.vector(lm_coeffs))
+
+  # Compare Multiple R-squared
+  # Expect the Multiple R-squared from the custom model to match that from the lm model
+  expect_equal(m$`Multiple R-squared`, m1$r.squared)
+
+  # Compare F-statistic
+  # Expect the F-statistic from the custom model to match that from the lm model
+  expect_equal(m$`F-statistic`, as.vector(m1$fstatistic[1]))
+
+  # Compare p-value of F-statistic
+  # Calculate p-value for F-statistic from the lm model
+  p_value_f_lm <-
+    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
+
+  # Expect the p-value from the custom model to match the calculated p-value from the lm model.
+  expect_equal(m$`p-value`, as.vector(p_value_f_lm))
+
+})
+
+
+```
+
+Test efficiency
+```{r setup}
+
+# bench::mark for estimate
+bench::mark(
+  m$Coefficients$Estimate, 
+  as.vector(m1$coefficients[, "Estimate"]),
+  iterations = 10,
+  check = TRUE
+)
+
+# bench::mark for F- statistic
+bench::mark(
+  m$`F-statistic`, 
+  as.vector(m1$fstatistic[1]),
+  iterations = 10,
+  check = TRUE
+)
+
+# bench::mark for p-value
+
+p_value_f_lm <-
+    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
+
+bench::mark(
+  m$`p-value`, 
+  as.vector(p_value_f_lm),
+  iterations = 10,
+  check = TRUE
+)
+
+```
+

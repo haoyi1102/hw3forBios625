@@ -29,7 +29,7 @@ You can install the development version of linearRegression from
 ``` r
 #install.packages("devtools") --> 
 devtools::install_github("haoyi1102/hw3forBios625")
-#> Skipping install of 'linearRegression' from a github remote, the SHA1 (00a2d8e7) has not changed since last install.
+#> Skipping install of 'linearRegression' from a github remote, the SHA1 (cf55fad3) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 ```
 
@@ -109,6 +109,114 @@ print(result)
 #> 
 #> $`p-value`
 #> [1] 0.7825987
+```
+
+## Test correctness and efficiency
+
+The comparison(s) against the original R function(s) on simulated or
+real datasets clearly and sufficiently demonstrate both correctness and
+efficiency of the function(s) implemented in the R package.
+
+``` r
+library(linearRegression)
+
+# Load test data
+data("testdata")
+
+# Run the custom linear regression function
+m <- linearRegression("Optimism", "Age", data)
+
+# Run the built-in lm() function and summarize it
+m1 <- summary(lm(Optimism ~ Age, data))
+```
+
+Test correctness
+
+``` r
+library(testthat)
+
+test_that("linearRegression matches lm function results", {
+  
+  # Compare Residuals
+ 
+  expect_equal(m$Residuals, as.vector(fivenum(m1$residuals)))
+
+  # Compare Coefficients
+  # Extract coefficients from the custom model
+  custom_coeffs <- m$Coefficients$Estimate
+
+  # Extract coefficients from the lm model summary
+  lm_coeffs <- m1$coefficients[, "Estimate"]
+
+  # Expect the coefficients from the custom model to match those from the lm model
+  expect_equal(custom_coeffs, as.vector(lm_coeffs))
+
+  # Compare Multiple R-squared
+  # Expect the Multiple R-squared from the custom model to match that from the lm model
+  expect_equal(m$`Multiple R-squared`, m1$r.squared)
+
+  # Compare F-statistic
+  # Expect the F-statistic from the custom model to match that from the lm model
+  expect_equal(m$`F-statistic`, as.vector(m1$fstatistic[1]))
+
+  # Compare p-value of F-statistic
+  # Calculate p-value for F-statistic from the lm model
+  p_value_f_lm <-
+    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
+
+  # Expect the p-value from the custom model to match the calculated p-value from the lm model.
+  expect_equal(m$`p-value`, as.vector(p_value_f_lm))
+
+})
+#> Test passed
+```
+
+Test efficiency
+
+``` r
+
+# bench::mark for estimate
+bench::mark(
+  m$Coefficients$Estimate, 
+  as.vector(m1$coefficients[, "Estimate"]),
+  iterations = 10,
+  check = TRUE
+)
+#> # A tibble: 2 × 6
+#>   expression                             min median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>                           <bch> <bch:>     <dbl> <bch:byt>    <dbl>
+#> 1 "m$Coefficients$Estimate"            1.7µs  2.3µs   335570.        0B        0
+#> 2 "as.vector(m1$coefficients[, \"Esti… 4.2µs  7.8µs   101010.        0B        0
+
+# bench::mark for F- statistic
+bench::mark(
+  m$`F-statistic`, 
+  as.vector(m1$fstatistic[1]),
+  iterations = 10,
+  check = TRUE
+)
+#> # A tibble: 2 × 6
+#>   expression                       min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>                  <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 m$`F-statistic`                500ns    900ns   877193.        0B        0
+#> 2 as.vector(m1$fstatistic[1])    3.2µs   3.75µs   218341.        0B        0
+
+# bench::mark for p-value
+
+p_value_f_lm <-
+    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
+
+bench::mark(
+  m$`p-value`, 
+  as.vector(p_value_f_lm),
+  iterations = 10,
+  check = TRUE
+)
+#> # A tibble: 2 × 6
+#>   expression                   min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>              <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 m$`p-value`                500ns    650ns  1010101.        0B        0
+#> 2 as.vector(p_value_f_lm)    1.2µs    1.4µs   458716.        0B        0
 ```
 
 ## Getting Help
