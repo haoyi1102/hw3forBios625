@@ -127,5 +127,15 @@ Test efficiency
 # Extract coefficients from the lm model summary
   lm_coeffs <- m1$coefficients[, "Estimate"]
 
+# bench::mark for estimate
+bench::mark(
+  m$Coefficients$Estimate, 
+  as.vector(m1$coefficients[, "Estimate"]),
+  iterations = 10,
+  check = TRUE
+)
+
+
+
 ```
 
