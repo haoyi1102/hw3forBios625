@@ -120,41 +120,12 @@ test_that("linearRegression matches lm function results", {
 
 Test efficiency
 ```{r setup}
-library(bench)
+
 # Extract coefficients from the custom model
   custom_coeffs <- m$Coefficients$Estimate
 
 # Extract coefficients from the lm model summary
   lm_coeffs <- m1$coefficients[, "Estimate"]
-
-# bench::mark for estimate
-bench::mark(
-  m$Coefficients$Estimate, 
-  as.vector(m1$coefficients[, "Estimate"]),
-  iterations = 10,
-  check = TRUE
-)
-
-# bench::mark for F- statistic
-bench::mark(
-  m$`F-statistic`, 
-  as.vector(m1$fstatistic[1]),
-  iterations = 10,
-  check = TRUE
-)
-
-
-# bench::mark for p-value
-
-p_value_f_lm <-
-    pf(m1$fstatistic[1], m1$fstatistic[2], m1$fstatistic[3], lower.tail = FALSE)
-
-bench::mark(
-  m$`p-value`, 
-  as.vector(p_value_f_lm),
-  iterations = 10,
-  check = TRUE
-)
 
 ```
 
