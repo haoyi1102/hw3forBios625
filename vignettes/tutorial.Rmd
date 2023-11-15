@@ -24,7 +24,7 @@ You can install the [linearRegression] from github:
 
 ```{r}
 #install.packages("devtools") --> 
-devtools::install_github("haoyi1102/hw3forBios625")
+#devtools::install_github("haoyi1102/hw3forBios625")
 ```
 
 # Example Usage
