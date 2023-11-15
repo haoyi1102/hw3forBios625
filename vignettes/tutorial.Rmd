@@ -120,7 +120,7 @@ test_that("linearRegression matches lm function results", {
 
 Test efficiency
 ```{r setup}
-
+library(bench)
 # Extract coefficients from the custom model
   custom_coeffs <- m$Coefficients$Estimate
 
